@@ -52,12 +52,20 @@ body.dark {
   --color-200: #313e51;
   --color-600: #fff;
   --color-400: #abc1e1;
+  background-image: url('./assets/images/pattern-background-mobile-dark.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right top;
 }
 body {
   line-height: 1.5;
   font-size: var(--fs-body-s);
-  background: var(--color-200);
   color: var(--color-600);
+  background-image: url('./assets/images/pattern-background-mobile-light.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right top;
+  background-color: var(--color-200);
 }
 h1,
 h2,
@@ -78,4 +86,28 @@ svg {
   display: block;
   max-width: 100%;
   object-fit: cover;
+}
+@media only screen and (min-width: 768px) {
+  body {
+    background-image: url('./assets/images/pattern-background-tablet-light.svg');
+    background-position: top left;
+    background-size: auto;
+  }
+  body.dark {
+    background-image: url('./assets/images/pattern-background-tablet-dark.svg');
+    background-position: top left;
+    background-size: auto;
+  }
+}
+@media only screen and (min-width: 1440px) {
+  body {
+    background-image: url('./assets/images/pattern-background-desktop-light.svg');
+    background-size: cover;
+    background-position: top 10% right;
+  }
+  body.dark {
+    background-image: url('./assets/images/pattern-background-desktop-dark.svg');
+    background-size: cover;
+    background-position: top 10% right;
+  }
 }
