@@ -6,6 +6,7 @@ import sunIconLight from '../assets/images/icon-sun-light.svg';
 import sunIconDark from '../assets/images/icon-sun-dark.svg';
 
 const ColorSwitch = styled.div`
+  padding-block: 0.6rem;
   margin-left: auto;
   gap: 0.8rem;
   & img {
@@ -30,7 +31,7 @@ const ColorSwitch = styled.div`
   }
   & .toggleContainer .checkmark {
     height: 20px;
-    width: 30px;
+    width: 32px;
     background-color: var(--purple);
     border-radius: 1rem;
   }
@@ -41,7 +42,7 @@ const ColorSwitch = styled.div`
     height: 12px;
     background: var(--color-100);
     border-radius: 50%;
-    top: 15%;
+    top: 18%;
     left: 15%;
     transition: all 0.3s ease;
   }
