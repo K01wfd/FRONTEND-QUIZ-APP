@@ -22,13 +22,6 @@ const ColorSwitch = styled.div`
     user-select: none;
   }
 
-  & .toggleContainer input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
   & .toggleContainer .checkmark {
     height: 20px;
     width: 32px;
@@ -77,9 +70,11 @@ function Switch() {
       >
         <input
           type='checkbox'
+          className='visually-hidden'
           name='toggle'
           id='toggle'
           onChange={(event) => handleColorChange(event)}
+          aria-label='color mode switch'
         />
         <span className='checkmark'></span>
       </label>
