@@ -5,18 +5,19 @@ import QuizPicker from './components/QuizPicker';
 
 function App() {
   const [currentQuiz, setCurrentQuiz] = useState('');
-
+  console.log(currentQuiz);
   return (
     <MainWrapper>
       <Header id='header'>
         <Switch />
       </Header>
       <main>
-        {!currentQuiz && <QuizPicker setCurrentQuiz={setCurrentQuiz} />}
+        <QuizPicker setCurrentQuiz={setCurrentQuiz} />
       </main>
     </MainWrapper>
   );
 }
+
 const MainWrapper = styled.div`
   max-width: 1440;
   margin-inline: auto;

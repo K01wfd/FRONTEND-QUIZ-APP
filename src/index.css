@@ -31,7 +31,8 @@ html {
   --color-600: #313e51;
 
   --main-border-radius: 1.4rem;
-  --box-shadow: 0px 16px 40px 0px rgba(143, 160, 193, 0.14);
+  --dark-box-shadow: 0px 16px 40px 0px rgba(143, 160, 193, 0.14);
+  --light-box-shadow: 0px 16px 40px 0px rgba(49, 62, 81, 0.14);
   --btn-hover-bg: linear-gradient(
       0deg,
       rgba(255, 255, 255, 0.5) 0%,
@@ -50,9 +51,10 @@ html {
   }
 }
 body.dark {
+  --color-100: #3b4d66;
   --color-200: #313e51;
-  --color-600: #fff;
   --color-400: #abc1e1;
+  --color-600: #fff;
   background-image: url('./assets/images/pattern-background-mobile-dark.svg');
   background-repeat: no-repeat;
   background-size: cover;

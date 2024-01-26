@@ -56,7 +56,6 @@ function Switch() {
 
     document.body.classList.toggle('dark');
   };
-  console.log(isChecked);
   return (
     <ColorSwitch className='flex align-items-center'>
       <img
