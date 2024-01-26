@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { setCurrentQuiz } from '../features/quizSlic';
 
 const Subject = styled.label`
   gap: 1.6rem;
@@ -8,10 +10,10 @@ const Subject = styled.label`
   padding: 1.2rem;
 `;
 
-function QuizSubject({ icon, title, setCurrentQuiz }) {
+function QuizSubject({ icon, title }) {
+  const dispatch = useDispatch();
   const handleSubjectChange = (event) => {
-    console.log(event.target.value);
-    setCurrentQuiz(event.target.value);
+    dispatch(setCurrentQuiz(event.target.value));
   };
   return (
     <Subject htmlFor={title} className='flex align-items-center'>

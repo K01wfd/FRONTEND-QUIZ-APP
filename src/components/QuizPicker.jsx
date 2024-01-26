@@ -10,7 +10,7 @@ const subjects = [
   { name: 'Javascript', icon: jsIcon },
   { name: 'Accessibility', icon: accessibilityIcon },
 ];
-function QuizPicker({ setCurrentQuiz }) {
+function QuizPicker() {
   return (
     <Section>
       <div className='welcomeDetails'>
@@ -22,11 +22,7 @@ function QuizPicker({ setCurrentQuiz }) {
       <ul>
         {subjects.map((subject) => (
           <li key={subject.name}>
-            <QuizSubject
-              title={subject.name}
-              icon={subject.icon}
-              setCurrentQuiz={setCurrentQuiz}
-            />
+            <QuizSubject title={subject.name} icon={subject.icon} />
           </li>
         ))}
       </ul>
