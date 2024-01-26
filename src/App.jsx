@@ -4,8 +4,6 @@ import QuizPicker from './components/QuizPicker';
 import { useSelector } from 'react-redux';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
-
-  console.log(currentQuiz);
   return (
     <MainWrapper>
       <Header id='header'>

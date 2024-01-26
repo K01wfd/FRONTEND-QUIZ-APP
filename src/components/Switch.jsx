@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setColorMode } from '../features/colorModeSlice';
 import { styled } from 'styled-components';
 import moonIconLight from '../assets/images/icon-moon-light.svg';
 import moonIconDark from '../assets/images/icon-moon-dark.svg';
@@ -33,7 +34,7 @@ const ColorSwitch = styled.div`
     position: absolute;
     width: 12px;
     height: 12px;
-    background: var(--color-100);
+    background: #fff;
     border-radius: 50%;
     top: 18%;
     left: 15%;
@@ -49,18 +50,17 @@ const ColorSwitch = styled.div`
   }
 `;
 function Switch() {
-  const [isChecked, setIsChecked] = useState(false);
-
+  const isDark = useSelector((state) => state.colorMode.isDark);
+  const dispatch = useDispatch();
   const handleColorChange = (event) => {
-    setIsChecked(event.target.checked);
-
+    dispatch(setColorMode(event.target.checked));
     document.body.classList.toggle('dark');
   };
   return (
     <ColorSwitch className='flex align-items-center'>
       <img
         className='sunIcon'
-        src={isChecked ? sunIconLight : sunIconDark}
+        src={isDark ? sunIconLight : sunIconDark}
         alt='sun icon'
       />
       <label
@@ -79,7 +79,7 @@ function Switch() {
       </label>
       <img
         className='moonIcon'
-        src={isChecked ? moonIconLight : moonIconDark}
+        src={isDark ? moonIconLight : moonIconDark}
         alt='moon icon'
       />
     </ColorSwitch>

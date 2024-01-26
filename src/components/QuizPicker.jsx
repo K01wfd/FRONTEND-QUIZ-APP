@@ -10,6 +10,12 @@ const subjects = [
   { name: 'Javascript', icon: jsIcon },
   { name: 'Accessibility', icon: accessibilityIcon },
 ];
+const iconBgClasses = [
+  'htmlIconBg',
+  'cssIconBg',
+  'jsIconBg',
+  'accessibilityIconBg',
+];
 function QuizPicker() {
   return (
     <Section>
@@ -20,9 +26,13 @@ function QuizPicker() {
         <p>Pick a subject to get started</p>
       </div>
       <ul>
-        {subjects.map((subject) => (
+        {subjects.map((subject, i) => (
           <li key={subject.name}>
-            <QuizSubject title={subject.name} icon={subject.icon} />
+            <QuizSubject
+              title={subject.name}
+              icon={subject.icon}
+              iconBgClass={iconBgClasses[i]}
+            />
           </li>
         ))}
       </ul>
@@ -32,7 +42,7 @@ function QuizPicker() {
 const Section = styled.section`
   margin-top: 3.2rem;
   & .welcomeDetails h1 {
-    font-weight: 300;
+    font-weight: 200;
     line-height: 1.2;
   }
   & .welcomeDetails strong {
