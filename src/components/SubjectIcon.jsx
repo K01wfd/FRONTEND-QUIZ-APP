@@ -1,7 +1,7 @@
-function SubjectIcon({ iconBgClass, icon, title }) {
+function SubjectIcon({ iconBgClass, icon, alt }) {
   return (
     <div className={`subjectIconWrapper ${iconBgClass}`}>
-      <img src={icon} alt={`${title} icon`} />
+      <img src={icon} alt={`${alt} icon`} />
     </div>
   );
 }
