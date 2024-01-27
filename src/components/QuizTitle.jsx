@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 function QuizTitle({ currentQuiz }) {
   return (
     <Title aria-label='quiz title' className='flex align-items-center'>
+      {/* Pick the right icon */}
       {subjects.map((subject, i) =>
         subject.name === currentQuiz ? (
           <SubjectIcon
@@ -16,6 +17,7 @@ function QuizTitle({ currentQuiz }) {
           />
         ) : null
       )}
+      {/* Quiz title */}
       <h3>{currentQuiz}</h3>
     </Title>
   );

@@ -3,18 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentQuiz } from '../features/quizSlic';
 import SubjectIcon from './SubjectIcon';
 
-const Subject = styled.label`
-  gap: 1.6rem;
-  box-shadow: ${({ $isDark }) =>
-    $isDark ? 'var(--light-box-shadow)' : 'var(--dark-box-shadow)'};
-  background: var(--color-100);
-  border-radius: var(--main-border-radius);
-  padding: 1.2rem;
-  & img {
-    max-width: 2.8rem;
-  }
-`;
-
 function QuizSubject({ icon, title, iconBgClass }) {
   const isDark = useSelector((state) => state.colorMode.isDark);
   const dispatch = useDispatch();
@@ -27,8 +15,10 @@ function QuizSubject({ icon, title, iconBgClass }) {
       className='flex align-items-center'
       $isDark={isDark}
     >
+      {/* Pick subject icon */}
       <SubjectIcon icon={icon} title={title} iconBgClass={iconBgClass} />
       <h3>{title}</h3>
+      {/* Visually-Hidden checkbox */}
       <input
         type='checkbox'
         aria-label={title + 'subject to pick'}
@@ -40,5 +30,15 @@ function QuizSubject({ icon, title, iconBgClass }) {
     </Subject>
   );
 }
-
+const Subject = styled.label`
+  gap: 1.6rem;
+  box-shadow: ${({ $isDark }) =>
+    $isDark ? 'var(--light-box-shadow)' : 'var(--dark-box-shadow)'};
+  background: var(--color-100);
+  border-radius: var(--main-border-radius);
+  padding: 1.2rem;
+  & img {
+    max-width: 2.8rem;
+  }
+`;
 export default QuizSubject;

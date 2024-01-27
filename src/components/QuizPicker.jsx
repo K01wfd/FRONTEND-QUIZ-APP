@@ -15,6 +15,7 @@ function QuizPicker() {
         <p>Pick a subject to get started</p>
       </div>
       <ul>
+        {/* Map quiz subjects to pick one */}
         {subjects.map((subject, i) => (
           <li key={subject.name}>
             <QuizSubject
@@ -25,6 +26,7 @@ function QuizPicker() {
           </li>
         ))}
       </ul>
+      {/* If choosen subject display start button */}
       {currentQuiz && <QuizButton label={`Start ${currentQuiz} quiz`} />}
     </Section>
   );

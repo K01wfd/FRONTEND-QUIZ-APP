@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import { setMainQuizStarted } from '../features/quizSlic';
 
 function QuizButton({ label }) {
+  // Handle mainQuizStarted state
   const dispatch = useDispatch();
-
   const handleButtonClick = () => {
     dispatch(setMainQuizStarted(true));
   };
+
   return <Button onClick={handleButtonClick}>{label}</Button>;
 }
 const Button = styled.button`
