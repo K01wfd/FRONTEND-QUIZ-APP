@@ -1,22 +1,51 @@
 import { useDispatch, useSelector } from 'react-redux';
+import {
+  setQuestionNumber,
+  setCorrectAnswers,
+  setCurrentAnswer,
+  setWrongAnswers,
+  setIsChecking,
+} from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
 import { optionsLabels } from '../../utils/utils';
-import QuizButton from '../QuizButton';
 import { updateOptionStyles } from '../../utils/utils';
+const { quizzes } = quizData;
+
 function Quiz({ activeQuiz }) {
-  const { quizzes } = quizData;
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
+  const wrongAnswers = useSelector((state) => state.quiz.wrongAnswers);
+  const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
+  const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
+  const isChecking = useSelector((state) => state.quiz.isChecking);
+  const dispatch = useDispatch();
 
-  const handleQuestionSubmit = () => {};
-
+  const handleQuestionSubmit = () => {
+    dispatch(setIsChecking(true));
+    quizzes.forEach((quiz) => {
+      if (quiz.title === activeQuiz) {
+        if (quiz.questions[questionNumber].answer === currentAnswer) {
+          dispatch(setCorrectAnswers(currentAnswer));
+        } else {
+          dispatch(setWrongAnswers(currentAnswer));
+        }
+      }
+    });
+    dispatch(setIsChecking(false));
+  };
+  const handleNextQuestion = () => {
+    dispatch(setIsChecking(true));
+    dispatch(setQuestionNumber());
+  };
   //   handle option select, update styles
   const handleOptionSelect = (event) => {
     const dataValue = event.target.value;
     const parentLabel = event.target.parentElement;
     updateOptionStyles(parentLabel, event.target);
+    dispatch(setCurrentAnswer(dataValue));
   };
+  console.log(wrongAnswers, correctAnswers);
   return (
     <Section>
       <p className='eyeBrow'>Question {questionNumber} of 10</p>
@@ -61,10 +90,16 @@ function Quiz({ activeQuiz }) {
             // quiz body end
           )
       )}
-      <QuizButton
-        label={'Submit answer'}
-        onsubmitQuestion={handleQuestionSubmit}
-      />
+      {isChecking && (
+        <button className='btn' onClick={handleQuestionSubmit}>
+          Submit answer
+        </button>
+      )}
+      {!isChecking && (
+        <button className='btn' onClick={handleNextQuestion}>
+          Next question
+        </button>
+      )}
     </Section>
   );
 }

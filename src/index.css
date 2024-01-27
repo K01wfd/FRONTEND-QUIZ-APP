@@ -131,7 +131,22 @@ svg {
 .accessibilityIconBg {
   background-color: #f6e7ff;
 }
-
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-item: center;
+  border-radius: var(--main-border-radius);
+  background-color: var(--purple);
+  color: #fff;
+  width: 100%;
+  border: 0;
+  padding: 1.6rem 0;
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  &:active {
+    transform: scale(0.97);
+  }
+}
 @media only screen and (min-width: 768px) {
   body {
     background-image: url('./assets/images/pattern-background-tablet-light.svg');

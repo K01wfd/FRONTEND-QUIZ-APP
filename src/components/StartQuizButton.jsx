@@ -11,15 +11,7 @@ function QuizButton({ label }) {
     }
   };
 
-  return (
-    <Button
-      onClick={() => {
-        handleButtonClick();
-      }}
-    >
-      {label}
-    </Button>
-  );
+  return <Button onClick={() => handleButtonClick()}>{label}</Button>;
 }
 const Button = styled.button`
   display: inline-flex;

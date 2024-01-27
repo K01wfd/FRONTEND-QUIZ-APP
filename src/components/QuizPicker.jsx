@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { subjects } from '../utils/utils';
 import { iconBgClasses } from '../utils/utils';
 import QuizSubject from './QuizSubject';
-import QuizButton from './QuizButton';
+import QuizButton from './StartQuizButton';
 function QuizPicker() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   return (
@@ -27,7 +27,7 @@ function QuizPicker() {
         ))}
       </ul>
       {/* If choosen subject display start button */}
-      {currentQuiz && <QuizButton label={`Start ${currentQuiz} quiz`} />}
+      {currentQuiz && <QuizButton label={'Start quiz'} />}
     </Section>
   );
 }
@@ -51,7 +51,7 @@ const Section = styled.section`
     margin-bottom: 2.5rem;
   }
   & ul > * + * {
-    margin-top: 1.2rem;
+    margin-top: 2.4rem;
   }
 `;
 export default QuizPicker;
