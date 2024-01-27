@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentQuiz } from '../features/quizSlic';
+import SubjectIcon from './SubjectIcon';
 
 const Subject = styled.label`
   gap: 1.6rem;
@@ -26,9 +27,7 @@ function QuizSubject({ icon, title, iconBgClass }) {
       className='flex align-items-center'
       $isDark={isDark}
     >
-      <div className={`subjectIconWrapper ${iconBgClass}`}>
-        <img src={icon} alt={`${title} icon`} />
-      </div>
+      <SubjectIcon icon={icon} title={title} iconBgClass={iconBgClass} />
       <h3>{title}</h3>
       <input
         type='checkbox'
