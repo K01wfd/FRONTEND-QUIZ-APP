@@ -1,7 +1,7 @@
-import Switch from './components/Switch';
-import { styled } from 'styled-components';
-import QuizPicker from './components/QuizPicker';
 import { useSelector } from 'react-redux';
+import { styled } from 'styled-components';
+import Switch from './components/Switch';
+import QuizPicker from './components/QuizPicker';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   return (
