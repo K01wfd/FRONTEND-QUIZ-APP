@@ -6,6 +6,42 @@ import moonIconDark from '../assets/images/icon-moon-dark.svg';
 import sunIconLight from '../assets/images/icon-sun-light.svg';
 import sunIconDark from '../assets/images/icon-sun-dark.svg';
 
+function Switch() {
+  const isDark = useSelector((state) => state.colorMode.isDark);
+  const dispatch = useDispatch();
+  const handleColorChange = (event) => {
+    dispatch(setColorMode(event.target.checked));
+    document.body.classList.toggle('dark');
+  };
+  return (
+    <ColorSwitch className='flex align-items-center'>
+      <img
+        className='sunIcon'
+        src={isDark ? sunIconLight : sunIconDark}
+        alt='sun icon'
+      />
+      <label
+        htmlFor='toggle'
+        className='toggleContainer flex align-items-center'
+      >
+        <input
+          type='checkbox'
+          className='visually-hidden'
+          name='toggle'
+          id='toggle'
+          onChange={(event) => handleColorChange(event)}
+          aria-label='color mode switch'
+        />
+        <span className='checkmark'></span>
+      </label>
+      <img
+        className='moonIcon'
+        src={isDark ? moonIconLight : moonIconDark}
+        alt='moon icon'
+      />
+    </ColorSwitch>
+  );
+}
 const ColorSwitch = styled.div`
   padding-block: 0.6rem;
   margin-left: auto;
@@ -49,41 +85,4 @@ const ColorSwitch = styled.div`
     }
   }
 `;
-function Switch() {
-  const isDark = useSelector((state) => state.colorMode.isDark);
-  const dispatch = useDispatch();
-  const handleColorChange = (event) => {
-    dispatch(setColorMode(event.target.checked));
-    document.body.classList.toggle('dark');
-  };
-  return (
-    <ColorSwitch className='flex align-items-center'>
-      <img
-        className='sunIcon'
-        src={isDark ? sunIconLight : sunIconDark}
-        alt='sun icon'
-      />
-      <label
-        htmlFor='toggle'
-        className='toggleContainer flex align-items-center'
-      >
-        <input
-          type='checkbox'
-          className='visually-hidden'
-          name='toggle'
-          id='toggle'
-          onChange={(event) => handleColorChange(event)}
-          aria-label='color mode switch'
-        />
-        <span className='checkmark'></span>
-      </label>
-      <img
-        className='moonIcon'
-        src={isDark ? moonIconLight : moonIconDark}
-        alt='moon icon'
-      />
-    </ColorSwitch>
-  );
-}
-
 export default Switch;

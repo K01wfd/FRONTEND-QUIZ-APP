@@ -75,7 +75,7 @@ body {
 h1,
 h2,
 h3 {
-  line-height: 1;
+  line-height: 1.09;
   font-weight: 500;
 }
 h1 {

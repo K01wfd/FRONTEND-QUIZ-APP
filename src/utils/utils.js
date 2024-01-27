@@ -5,7 +5,7 @@ import accessibilityIcon from '../assets/images/icon-accessibility.svg';
 export const subjects = [
   { name: 'HTML', icon: htmlIcon },
   { name: 'CSS', icon: cssIcon },
-  { name: 'Javascript', icon: jsIcon },
+  { name: 'JavaScript', icon: jsIcon },
   { name: 'Accessibility', icon: accessibilityIcon },
 ];
 export const iconBgClasses = [
@@ -14,3 +14,4 @@ export const iconBgClasses = [
   'jsIconBg',
   'accessibilityIconBg',
 ];
+export const optionsLabels = ['A', 'B', 'C', 'D'];

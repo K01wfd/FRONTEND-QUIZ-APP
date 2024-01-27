@@ -3,6 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   currentQuiz: '',
   mainQuizStarted: false,
+  questionNumber: 1,
+  correctAnswers: [],
+  wrongAnswer: [],
 };
 
 const quizSlice = createSlice({
@@ -15,8 +18,23 @@ const quizSlice = createSlice({
     setMainQuizStarted: (state, action) => {
       state.mainQuizStarted = action.payload;
     },
+    setQuestionNumber: (state) => {
+      state.questionNumber++;
+    },
+    setCorrectAnswers: (state, action) => {
+      state.correctAnswers = [...state.correctAnswers, action.payload];
+    },
+    setWrongAnswers: (state, action) => {
+      state.wrongAnswer = [...state.wrongAnswer, action.payload];
+    },
   },
 });
 
-export const { setCurrentQuiz, setMainQuizStarted } = quizSlice.actions;
+export const {
+  setCurrentQuiz,
+  setMainQuizStarted,
+  setQuestionNumber,
+  setCorrectAnswers,
+  setWrongAnswers,
+} = quizSlice.actions;
 export default quizSlice.reducer;

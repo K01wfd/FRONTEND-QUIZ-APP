@@ -9,7 +9,7 @@ const colorModeSlice = createSlice({
   initialState,
   reducers: {
     setColorMode: (state, action) => {
-      state.color = action.payload;
+      state.isDark = action.payload;
     },
   },
 });
