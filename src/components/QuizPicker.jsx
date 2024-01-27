@@ -1,21 +1,7 @@
 import { styled } from 'styled-components';
 import QuizSubject from './QuizSubject';
-import htmlIcon from '../assets/images/icon-html.svg';
-import cssIcon from '../assets/images/icon-css.svg';
-import jsIcon from '../assets/images/icon-js.svg';
-import accessibilityIcon from '../assets/images/icon-accessibility.svg';
-const subjects = [
-  { name: 'HTML', icon: htmlIcon },
-  { name: 'CSS', icon: cssIcon },
-  { name: 'Javascript', icon: jsIcon },
-  { name: 'Accessibility', icon: accessibilityIcon },
-];
-const iconBgClasses = [
-  'htmlIconBg',
-  'cssIconBg',
-  'jsIconBg',
-  'accessibilityIconBg',
-];
+import { subjects } from '../utils/utils';
+import { iconBgClasses } from '../utils/utils';
 function QuizPicker() {
   return (
     <Section>
