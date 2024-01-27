@@ -25,6 +25,12 @@ const MainWrapper = styled.div`
   max-width: 1440;
   margin-inline: auto;
   padding-inline: 2.4rem;
+  @media only screen and (min-width: 768px) {
+    padding-inline: 6.4rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    padding-inline: 14.4rem;
+  }
 `;
 const Header = styled.header`
   display: flex;

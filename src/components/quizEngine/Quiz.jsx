@@ -14,7 +14,6 @@ function Quiz({ activeQuiz }) {
   const handleOptionSelect = (event) => {
     const dataValue = event.target.value;
     const parentLabel = event.target.parentElement;
-
     updateOptionStyles(parentLabel, event.target);
   };
   return (
