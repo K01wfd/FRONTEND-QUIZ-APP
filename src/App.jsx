@@ -4,14 +4,13 @@ import Switch from './components/Switch';
 import QuizPicker from './components/QuizPicker';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
+  const mainQuizStarted = useSelector((state) => state.quiz.mainQuizStarted);
   return (
     <MainWrapper>
       <Header id='header'>
         <Switch />
       </Header>
-      <main>
-        <QuizPicker />
-      </main>
+      <main>{!mainQuizStarted && <QuizPicker />}</main>
     </MainWrapper>
   );
 }

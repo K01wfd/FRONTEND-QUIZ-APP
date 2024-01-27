@@ -1,7 +1,14 @@
 import { styled } from 'styled-components';
+import { useDispatch } from 'react-redux';
+import { setMainQuizStarted } from '../features/quizSlic';
 
 function QuizButton({ label }) {
-  return <Button>{label}</Button>;
+  const dispatch = useDispatch();
+
+  const handleButtonClick = () => {
+    dispatch(setMainQuizStarted(true));
+  };
+  return <Button onClick={handleButtonClick}>{label}</Button>;
 }
 const Button = styled.button`
   display: inline-flex;
