@@ -8,6 +8,7 @@ function Quiz({ activeQuiz }) {
   const { quizzes } = quizData;
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
+
   const handleQuestionSubmit = () => {};
 
   //   handle option select, update styles

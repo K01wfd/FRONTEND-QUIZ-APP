@@ -4,6 +4,7 @@ const initialState = {
   currentQuiz: '',
   mainQuizStarted: false,
   questionNumber: 1,
+  currentAnswer: '',
   correctAnswers: [],
   wrongAnswer: [],
 };
@@ -26,6 +27,9 @@ const quizSlice = createSlice({
     },
     setWrongAnswers: (state, action) => {
       state.wrongAnswer = [...state.wrongAnswer, action.payload];
+    },
+    setCurrentAnswer: (state, action) => {
+      state.currentAnswer = action.payload;
     },
   },
 });
