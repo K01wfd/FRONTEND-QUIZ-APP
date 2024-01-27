@@ -3,12 +3,20 @@ import quizData from '../../data.json';
 import { styled } from 'styled-components';
 import { optionsLabels } from '../../utils/utils';
 import QuizButton from '../QuizButton';
-
+import { updateOptionStyles } from '../../utils/utils';
 function Quiz({ activeQuiz }) {
   const { quizzes } = quizData;
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
+  const handleQuestionSubmit = () => {};
 
+  //   handle option select, update styles
+  const handleOptionSelect = (event) => {
+    const dataValue = event.target.value;
+    const parentLabel = event.target.parentElement;
+
+    updateOptionStyles(parentLabel, event.target);
+  };
   return (
     <Section>
       <p className='eyeBrow'>Question {questionNumber} of 10</p>
@@ -31,13 +39,17 @@ function Quiz({ activeQuiz }) {
                       htmlFor={optionsLabels[i]}
                       className='flex align-items-center'
                       $isDark={isDark}
+                      id='optionLabelWrapper'
                     >
-                      <span>{optionsLabels[i]}</span>
+                      <span className='optionLabel'>{optionsLabels[i]}</span>
                       <p>{option}</p>
                       <input
                         className='visually-hidden'
-                        type='checkbox'
+                        type='radio'
+                        name={'quizOption'}
                         id={optionsLabels[i]}
+                        onChange={(event) => handleOptionSelect(event)}
+                        value={option}
                       />
                     </QuestionOption>
                   </li>
@@ -49,7 +61,10 @@ function Quiz({ activeQuiz }) {
             // quiz body end
           )
       )}
-      <QuizButton label={'Submit answer'} />
+      <QuizButton
+        label={'Submit answer'}
+        onsubmitQuestion={handleQuestionSubmit}
+      />
     </Section>
   );
 }
@@ -97,8 +112,7 @@ const QuestionOption = styled.label`
   background-color: var(--color-100);
   border-radius: var(--main-border-radius);
   padding: 1rem;
-
-  & span {
+  & .optionLabel {
     display: inline-block;
     padding: 1rem 2rem;
     font-weight: 500;

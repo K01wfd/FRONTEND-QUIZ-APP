@@ -131,6 +131,7 @@ svg {
 .accessibilityIconBg {
   background-color: #f6e7ff;
 }
+
 @media only screen and (min-width: 768px) {
   body {
     background-image: url('./assets/images/pattern-background-tablet-light.svg');

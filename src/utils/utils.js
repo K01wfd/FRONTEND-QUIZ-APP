@@ -15,3 +15,16 @@ export const iconBgClasses = [
   'accessibilityIconBg',
 ];
 export const optionsLabels = ['A', 'B', 'C', 'D'];
+export function updateOptionStyles(parent, target) {
+  const activeOptions = document.querySelectorAll('#optionLabelWrapper');
+  activeOptions.forEach((label) => {
+    label.style.outline = 'none';
+    label.querySelector('span').style.color = '#626C7F';
+    label.querySelector('span').style.backgroundColor = '#F4F6FA';
+  });
+  if (target.checked) {
+    parent.style.outline = '2px solid #A729F5';
+    parent.querySelector('span').style.backgroundColor = '#A729F5';
+    parent.querySelector('span').style.color = '#fff';
+  }
+}
