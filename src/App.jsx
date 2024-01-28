@@ -22,7 +22,7 @@ function App() {
 }
 
 const MainWrapper = styled.div`
-  max-width: 1440;
+  max-width: 1440px;
   margin-inline: auto;
   padding-inline: 2.4rem;
   @media only screen and (min-width: 768px) {

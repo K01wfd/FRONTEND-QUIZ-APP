@@ -3,40 +3,42 @@ import {
   setQuestionNumber,
   setCorrectAnswers,
   setCurrentAnswer,
-  setWrongAnswers,
   setIsChecking,
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
-import { optionsLabels } from '../../utils/utils';
+import { getQuestionsLength, optionsLabels } from '../../utils/utils';
 import { updateOptionStyles } from '../../utils/utils';
+import ErrorDisplay from '../ErrorDisplay';
+
 const { quizzes } = quizData;
 
 function Quiz({ activeQuiz }) {
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
-  const wrongAnswers = useSelector((state) => state.quiz.wrongAnswers);
   const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const isChecking = useSelector((state) => state.quiz.isChecking);
   const dispatch = useDispatch();
 
   const handleQuestionSubmit = () => {
-    dispatch(setIsChecking(true));
-    quizzes.forEach((quiz) => {
-      if (quiz.title === activeQuiz) {
-        if (quiz.questions[questionNumber].answer === currentAnswer) {
-          dispatch(setCorrectAnswers(currentAnswer));
-        } else {
-          dispatch(setWrongAnswers(currentAnswer));
+    if (currentAnswer) {
+      dispatch(setIsChecking(true));
+      quizzes.forEach((quiz) => {
+        if (quiz.title === activeQuiz) {
+          if (quiz.questions[questionNumber].answer === currentAnswer) {
+            dispatch(setCorrectAnswers(currentAnswer));
+          }
         }
-      }
-    });
-    dispatch(setIsChecking(false));
+      });
+      dispatch(setIsChecking(false));
+    }
   };
   const handleNextQuestion = () => {
     dispatch(setIsChecking(true));
-    dispatch(setQuestionNumber());
+    if (questionNumber < getQuestionsLength(quizzes, activeQuiz) - 1) {
+      dispatch(setQuestionNumber());
+    }
   };
   //   handle option select, update styles
   const handleOptionSelect = (event) => {
@@ -45,10 +47,9 @@ function Quiz({ activeQuiz }) {
     updateOptionStyles(parentLabel, event.target);
     dispatch(setCurrentAnswer(dataValue));
   };
-  console.log(wrongAnswers, correctAnswers);
   return (
     <Section>
-      <p className='eyeBrow'>Question {questionNumber} of 10</p>
+      <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
 
       {quizzes.map(
         (quiz) =>
@@ -56,7 +57,7 @@ function Quiz({ activeQuiz }) {
             // quizBody
             <QuizQuestion key={quiz.title}>
               <h2>{quiz.questions[questionNumber].question}</h2>
-              <ProgreesBar $width={questionNumber * 10}>
+              <ProgreesBar $width={(questionNumber + 1) * 10}>
                 <div></div>
               </ProgreesBar>
               {/* Options list */}
@@ -100,6 +101,7 @@ function Quiz({ activeQuiz }) {
           Next question
         </button>
       )}
+      <ErrorDisplay message={'hello'} />
     </Section>
   );
 }

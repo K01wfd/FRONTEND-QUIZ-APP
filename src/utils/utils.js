@@ -34,3 +34,12 @@ export function updateOptionStyles(
     parent.querySelector('span').style.color = '#fff';
   }
 }
+export function getQuestionsLength(quizzes, currentQuiz) {
+  let length = 0;
+  quizzes.forEach((quiz) => {
+    if (quiz.title === currentQuiz) {
+      length = quiz.questions.length;
+    }
+  });
+  return length;
+}
