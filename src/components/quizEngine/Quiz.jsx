@@ -7,7 +7,11 @@ import {
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
-import { getQuestionsLength, optionsLabels } from '../../utils/utils';
+import {
+  clearOptionStyles,
+  getQuestionsLength,
+  optionsLabels,
+} from '../../utils/utils';
 import { updateOptionStyles } from '../../utils/utils';
 import ErrorDisplay from '../ErrorDisplay';
 
@@ -20,6 +24,14 @@ function Quiz({ activeQuiz }) {
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const isChecking = useSelector((state) => state.quiz.isChecking);
   const dispatch = useDispatch();
+
+  //   handle option select, update styles
+  const handleOptionSelect = (event) => {
+    const dataValue = event.target.value;
+    const parentLabel = event.target.parentElement;
+    dispatch(setCurrentAnswer(dataValue));
+    updateOptionStyles(parentLabel, event.target);
+  };
 
   const handleQuestionSubmit = () => {
     if (currentAnswer) {
@@ -36,17 +48,13 @@ function Quiz({ activeQuiz }) {
   };
   const handleNextQuestion = () => {
     dispatch(setIsChecking(true));
+    dispatch(setCurrentAnswer(''));
+    clearOptionStyles();
     if (questionNumber < getQuestionsLength(quizzes, activeQuiz) - 1) {
       dispatch(setQuestionNumber());
     }
   };
-  //   handle option select, update styles
-  const handleOptionSelect = (event) => {
-    const dataValue = event.target.value;
-    const parentLabel = event.target.parentElement;
-    updateOptionStyles(parentLabel, event.target);
-    dispatch(setCurrentAnswer(dataValue));
-  };
+
   return (
     <Section>
       <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
@@ -76,10 +84,10 @@ function Quiz({ activeQuiz }) {
                       <input
                         className='visually-hidden'
                         type='radio'
-                        name={'quizOption'}
                         id={optionsLabels[i]}
                         onChange={(event) => handleOptionSelect(event)}
                         value={option}
+                        checked={currentAnswer === option}
                       />
                     </QuestionOption>
                   </li>
@@ -149,6 +157,7 @@ const QuestionOption = styled.label`
   background-color: var(--color-100);
   border-radius: var(--main-border-radius);
   padding: 1rem;
+  cursor: pointer;
   & .optionLabel {
     display: inline-block;
     padding: 1rem 2rem;

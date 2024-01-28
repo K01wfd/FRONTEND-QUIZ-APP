@@ -16,23 +16,20 @@ export const iconBgClasses = [
 ];
 export const optionsLabels = ['A', 'B', 'C', 'D'];
 
-export function updateOptionStyles(
-  parent,
-  target,
-  error = false,
-  success = false
-) {
+export function updateOptionStyles(parent, target) {
+  if (target.checked) {
+    parent.style.outline = '3px solid #A729F5';
+    parent.querySelector('span').style.backgroundColor = '#A729F5';
+    parent.querySelector('span').style.color = '#fff';
+  }
+}
+export function clearOptionStyles() {
   const activeOptions = document.querySelectorAll('#optionLabelWrapper');
   activeOptions.forEach((label) => {
     label.style.outline = 'none';
     label.querySelector('span').style.color = '#626C7F';
     label.querySelector('span').style.backgroundColor = '#F4F6FA';
   });
-  if (target.checked) {
-    parent.style.outline = '3px solid #A729F5';
-    parent.querySelector('span').style.backgroundColor = '#A729F5';
-    parent.querySelector('span').style.color = '#fff';
-  }
 }
 export function getQuestionsLength(quizzes, currentQuiz) {
   let length = 0;
