@@ -3,19 +3,22 @@ import {
   setQuestionNumber,
   setCorrectAnswers,
   setCurrentAnswer,
-  setIsChecking,
+  setWillCheckAnswer,
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
 import {
-  clearOptionStyles,
   getQuestionsLength,
   optionsLabels,
-  updateOptionStyles,
+  checkAnswers,
 } from '../../utils/utils';
+import {
+  updateOptionStyles,
+  clearOptionStyles,
+  updateCorrectAnswerStyles,
+} from '../../utils/dealingWithOptions';
 import ErrorDisplay from '../ErrorDisplay';
-import iconCorrect from '../../assets/images/icon-correct.svg';
-import iconIncorrect from '../../assets/images/icon-incorrect.svg';
+
 import { useState } from 'react';
 
 const { quizzes } = quizData;
@@ -24,43 +27,47 @@ function Quiz({ currentQuiz }) {
   const [isOptionSelected, setIsOptionSelected] = useState(true);
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
+  const { questionLength, activeQuiz } = getQuestionsLength(
+    quizzes,
+    currentQuiz
+  );
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
-  const isChecking = useSelector((state) => state.quiz.isChecking);
+  const willCheckAnswer = useSelector((state) => state.quiz.willCheckAnswer);
   const dispatch = useDispatch();
+  const {
+    correctAnswerRef,
+    incorrectAnswerRef,
+    correctAnswer,
+    missedCorrectRef,
+  } = checkAnswers(currentQuiz, currentAnswer, questionNumber);
 
-  //   handle option select, update styles
   const handleOptionSelect = (event) => {
-    setIsOptionSelected(true);
     const dataValue = event.target.value;
-    const siblingElement = event.target.nextSibling;
-    dispatch(setCurrentAnswer(dataValue));
-    clearOptionStyles();
-    updateOptionStyles(siblingElement, event.target, '#A729F5');
-    console.dir(event.target);
+    setIsOptionSelected(true); // option selected true
+    dispatch(setCurrentAnswer(dataValue)); // set current answer state
+    clearOptionStyles(); // clear prev hilighted options
+    updateOptionStyles(event, '#A729F5'); // highlight option selected
   };
 
-  // submit question to check correct answer
   const handleQuestionSubmit = () => {
+    // if answer selected
     if (currentAnswer) {
-      dispatch(setIsChecking(true));
-      quizzes.forEach((quiz) => {
-        if (quiz.title === currentQuiz) {
-          if (quiz.questions[questionNumber].answer === currentAnswer) {
-            dispatch(setCorrectAnswers(currentAnswer));
-          }
-        }
-      });
-      dispatch(setIsChecking(false));
+      dispatch(setWillCheckAnswer(true)); // set is checking answer to true
+      if (correctAnswer) {
+        dispatch(setCorrectAnswers(correctAnswer)); // push to correct answers array
+        updateCorrectAnswerStyles(correctAnswerRef);
+      }
+      dispatch(setWillCheckAnswer(false)); // set is checking answer to false
     } else {
       setIsOptionSelected(false);
     }
   };
   // onNext question event
   const handleNextQuestion = () => {
-    dispatch(setIsChecking(true));
+    dispatch(setWillCheckAnswer(true));
     dispatch(setCurrentAnswer(''));
     clearOptionStyles();
-    if (questionNumber < getQuestionsLength(quizzes, currentQuiz) - 1) {
+    if (questionNumber < questionLength - 1) {
       dispatch(setQuestionNumber());
     }
   };
@@ -75,7 +82,10 @@ function Quiz({ currentQuiz }) {
             // quizBody
             <QuizQuestion key={quiz.title}>
               <h2>{quiz.questions[questionNumber].question}</h2>
-              <ProgreesBar $width={(questionNumber + 1) * 10}>
+              <ProgreesBar
+                role='progressbar'
+                $width={(questionNumber + 1) * 10}
+              >
                 <div></div>
               </ProgreesBar>
               {/* Options list */}
@@ -98,7 +108,10 @@ function Quiz({ currentQuiz }) {
                       $isDark={isDark}
                       id='optionLabelWrapper'
                     >
-                      <div className='flex align-items-center'>
+                      <div
+                        className='flex align-items-center'
+                        data-label-inner-content
+                      >
                         <span className='optionLabel'>{optionsLabels[i]}</span>
                         <p>{option}</p>
                       </div>
@@ -112,12 +125,12 @@ function Quiz({ currentQuiz }) {
             // quiz body end
           )
       )}
-      {isChecking && (
+      {willCheckAnswer && (
         <button className='btn' onClick={handleQuestionSubmit}>
           Submit answer
         </button>
       )}
-      {!isChecking && (
+      {!willCheckAnswer && (
         <button className='btn' onClick={handleNextQuestion}>
           Next question
         </button>

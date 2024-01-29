@@ -7,7 +7,7 @@ const initialState = {
   currentAnswer: '',
   correctAnswers: [],
   wrongAnswers: [],
-  isChecking: true,
+  willCheckAnswer: true,
 };
 
 const quizSlice = createSlice({
@@ -32,8 +32,8 @@ const quizSlice = createSlice({
     setCurrentAnswer: (state, action) => {
       state.currentAnswer = action.payload;
     },
-    setIsChecking: (state, action) => {
-      state.isChecking = action.payload;
+    setWillCheckAnswer: (state, action) => {
+      state.willCheckAnswer = action.payload;
     },
   },
 });
@@ -45,6 +45,6 @@ export const {
   setCorrectAnswers,
   setWrongAnswers,
   setCurrentAnswer,
-  setIsChecking,
+  setWillCheckAnswer,
 } = quizSlice.actions;
 export default quizSlice.reducer;
