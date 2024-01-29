@@ -148,6 +148,13 @@ svg {
     transform: scale(0.97);
   }
 }
+.btn:focus-visible {
+  outline: 3px solid var(--success);
+  outline-offset: 0.4rem;
+}
+.btn:hover {
+  background: var(--btn-hover-bg);
+}
 @media only screen and (min-width: 768px) {
   body {
     background-image: url('./assets/images/pattern-background-tablet-light.svg');

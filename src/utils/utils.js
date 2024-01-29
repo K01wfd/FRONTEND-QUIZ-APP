@@ -16,12 +16,11 @@ export const iconBgClasses = [
 ];
 export const optionsLabels = ['A', 'B', 'C', 'D'];
 
-export function updateOptionStyles(parent, target) {
-  console.dir(target);
+export function updateOptionStyles(sibling, target) {
   if (target.checked) {
-    parent.style.outline = '3px solid #A729F5';
-    parent.querySelector('span').style.backgroundColor = '#A729F5';
-    parent.querySelector('span').style.color = '#fff';
+    sibling.style.outline = '3px solid #A729F5';
+    sibling.querySelector('span').style.backgroundColor = '#A729F5';
+    sibling.querySelector('span').style.color = '#fff';
   }
 }
 export function clearOptionStyles() {

@@ -27,10 +27,11 @@ function Quiz({ currentQuiz }) {
   //   handle option select, update styles
   const handleOptionSelect = (event) => {
     const dataValue = event.target.value;
-    const parentLabel = event.target.parentElement;
+    const siblingElement = event.target.nextSibling;
     dispatch(setCurrentAnswer(dataValue));
     clearOptionStyles();
-    updateOptionStyles(parentLabel, event.target);
+    updateOptionStyles(siblingElement, event.target);
+    console.dir(event.target);
   };
 
   const handleQuestionSubmit = () => {
@@ -73,6 +74,15 @@ function Quiz({ currentQuiz }) {
                 {quiz.questions[questionNumber].options.map((option, i) => (
                   // Option
                   <li key={i + 'option'}>
+                    <input
+                      type='radio'
+                      className='visually-hidden'
+                      name='quizOption'
+                      id={optionsLabels[i]}
+                      onChange={(event) => handleOptionSelect(event)}
+                      value={option}
+                      checked={currentAnswer === option}
+                    />
                     <QuestionOption
                       htmlFor={optionsLabels[i]}
                       className='flex align-items-center'
@@ -81,14 +91,6 @@ function Quiz({ currentQuiz }) {
                     >
                       <span className='optionLabel'>{optionsLabels[i]}</span>
                       <p>{option}</p>
-                      <input
-                        type='radio'
-                        name='quizOption'
-                        id={optionsLabels[i]}
-                        onChange={(event) => handleOptionSelect(event)}
-                        value={option}
-                        checked={currentAnswer === option}
-                      />
                     </QuestionOption>
                   </li>
                   //   Option end
@@ -109,7 +111,7 @@ function Quiz({ currentQuiz }) {
           Next question
         </button>
       )}
-      <ErrorDisplay message={'hello'} />
+      {/* <ErrorDisplay message={'hello'} /> */}
     </Section>
   );
 }
@@ -125,6 +127,9 @@ const QuizQuestion = styled.div`
   & h2 {
     margin-top: 2rem;
     margin-bottom: 3rem;
+  }
+  & h2:focus {
+    outline: 2px solid var(--purple);
   }
 `;
 const ProgreesBar = styled.div`
@@ -146,6 +151,13 @@ const ProgreesBar = styled.div`
 `;
 const OptionList = styled.ul`
   list-style: none;
+  & input:focus ~ label {
+    outline: 3px solid var(--purple);
+  }
+  & input:focus ~ label .optionLabel {
+    background-color: var(--purple);
+    color: #fff;
+  }
   & > * + * {
     margin-top: 2rem;
   }
@@ -158,9 +170,6 @@ const QuestionOption = styled.label`
   border-radius: var(--main-border-radius);
   padding: 1rem;
   cursor: pointer;
-  &:focus {
-    outline: 1px solid red;
-  }
   & .optionLabel {
     display: inline-block;
     padding: 1rem 2rem;

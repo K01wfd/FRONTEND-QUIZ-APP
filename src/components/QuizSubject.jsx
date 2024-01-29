@@ -15,7 +15,7 @@ function QuizSubject({ icon, title, iconBgClass }) {
       {/* Visually-Hidden checkbox */}
       <input
         type='checkbox'
-        aria-label={title + 'subject to pick'}
+        aria-label={title + 'quiz subject'}
         className='visually-hidden'
         id={title}
         value={title}

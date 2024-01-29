@@ -12,7 +12,6 @@ function Switch() {
   const handleColorChange = (event) => {
     dispatch(setColorMode(event.target.checked));
     document.body.classList.toggle('dark');
-    console.dir(event.target);
   };
   return (
     <ColorSwitch className='flex align-items-center'>
@@ -81,7 +80,7 @@ const ColorSwitch = styled.div`
   & input:checked ~ .checkmark:after {
     left: 45%;
   }
-  & input:focus ~ .checkmark {
+  & input:focus-visible ~ .checkmark {
     outline: 3px solid var(--success);
     outline-offset: 0.4rem;
   }
