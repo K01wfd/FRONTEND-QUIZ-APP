@@ -11,16 +11,15 @@ import {
   clearOptionStyles,
   getQuestionsLength,
   optionsLabels,
+  updateOptionStyles,
 } from '../../utils/utils';
-import { updateOptionStyles } from '../../utils/utils';
 import ErrorDisplay from '../ErrorDisplay';
 
 const { quizzes } = quizData;
 
-function Quiz({ activeQuiz }) {
+function Quiz({ currentQuiz }) {
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
-  const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const isChecking = useSelector((state) => state.quiz.isChecking);
   const dispatch = useDispatch();
@@ -30,6 +29,7 @@ function Quiz({ activeQuiz }) {
     const dataValue = event.target.value;
     const parentLabel = event.target.parentElement;
     dispatch(setCurrentAnswer(dataValue));
+    clearOptionStyles();
     updateOptionStyles(parentLabel, event.target);
   };
 
@@ -37,7 +37,7 @@ function Quiz({ activeQuiz }) {
     if (currentAnswer) {
       dispatch(setIsChecking(true));
       quizzes.forEach((quiz) => {
-        if (quiz.title === activeQuiz) {
+        if (quiz.title === currentQuiz) {
           if (quiz.questions[questionNumber].answer === currentAnswer) {
             dispatch(setCorrectAnswers(currentAnswer));
           }
@@ -50,7 +50,7 @@ function Quiz({ activeQuiz }) {
     dispatch(setIsChecking(true));
     dispatch(setCurrentAnswer(''));
     clearOptionStyles();
-    if (questionNumber < getQuestionsLength(quizzes, activeQuiz) - 1) {
+    if (questionNumber < getQuestionsLength(quizzes, currentQuiz) - 1) {
       dispatch(setQuestionNumber());
     }
   };
@@ -61,7 +61,7 @@ function Quiz({ activeQuiz }) {
 
       {quizzes.map(
         (quiz) =>
-          quiz.title === activeQuiz && (
+          quiz.title === currentQuiz && (
             // quizBody
             <QuizQuestion key={quiz.title}>
               <h2>{quiz.questions[questionNumber].question}</h2>
@@ -82,8 +82,8 @@ function Quiz({ activeQuiz }) {
                       <span className='optionLabel'>{optionsLabels[i]}</span>
                       <p>{option}</p>
                       <input
-                        className='visually-hidden'
                         type='radio'
+                        name='quizOption'
                         id={optionsLabels[i]}
                         onChange={(event) => handleOptionSelect(event)}
                         value={option}
@@ -158,6 +158,9 @@ const QuestionOption = styled.label`
   border-radius: var(--main-border-radius);
   padding: 1rem;
   cursor: pointer;
+  &:focus {
+    outline: 1px solid red;
+  }
   & .optionLabel {
     display: inline-block;
     padding: 1rem 2rem;

@@ -12,6 +12,7 @@ function Switch() {
   const handleColorChange = (event) => {
     dispatch(setColorMode(event.target.checked));
     document.body.classList.toggle('dark');
+    console.dir(event.target);
   };
   return (
     <ColorSwitch className='flex align-items-center'>
@@ -20,6 +21,7 @@ function Switch() {
         src={isDark ? sunIconLight : sunIconDark}
         alt='sun icon'
       />
+
       <label
         htmlFor='toggle'
         className='toggleContainer flex align-items-center'
@@ -78,6 +80,10 @@ const ColorSwitch = styled.div`
   }
   & input:checked ~ .checkmark:after {
     left: 45%;
+  }
+  & input:focus ~ .checkmark {
+    outline: 3px solid var(--success);
+    outline-offset: 0.4rem;
   }
   @media only screen and (min-width: 768px) {
     & img {

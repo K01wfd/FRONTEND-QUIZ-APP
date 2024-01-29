@@ -7,6 +7,8 @@ import Quiz from './components/quizEngine/Quiz';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   const mainQuizStarted = useSelector((state) => state.quiz.mainQuizStarted);
+  const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
+  console.log(correctAnswers);
   return (
     <MainWrapper>
       <Header id='header'>
@@ -15,7 +17,7 @@ function App() {
       </Header>
       <main>
         {!mainQuizStarted && <QuizPicker />}
-        {mainQuizStarted && <Quiz activeQuiz={currentQuiz} />}
+        {mainQuizStarted && <Quiz currentQuiz={currentQuiz} />}
       </main>
     </MainWrapper>
   );

@@ -17,6 +17,7 @@ export const iconBgClasses = [
 export const optionsLabels = ['A', 'B', 'C', 'D'];
 
 export function updateOptionStyles(parent, target) {
+  console.dir(target);
   if (target.checked) {
     parent.style.outline = '3px solid #A729F5';
     parent.querySelector('span').style.backgroundColor = '#A729F5';

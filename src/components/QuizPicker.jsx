@@ -1,11 +1,8 @@
-import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import { subjects } from '../utils/utils';
 import { iconBgClasses } from '../utils/utils';
 import QuizSubject from './QuizSubject';
-import QuizButton from './StartQuizButton';
 function QuizPicker() {
-  const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   return (
     <Section>
       <div className='welcomeDetails'>
@@ -26,8 +23,6 @@ function QuizPicker() {
           </li>
         ))}
       </ul>
-      {/* If choosen subject display start button */}
-      {currentQuiz && <QuizButton label={'Start quiz'} />}
     </Section>
   );
 }
@@ -52,6 +47,18 @@ const Section = styled.section`
   }
   & ul > * + * {
     margin-top: 2.4rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    margin-top: 8rem;
+    display: flex;
+    align-items: flex-start;
+    & ul {
+      flex-basis: 50%;
+      margin-top: 0;
+    }
+    & .welcomeDetails p {
+      margin-top: 4.8rem;
+    }
   }
 `;
 export default QuizPicker;
