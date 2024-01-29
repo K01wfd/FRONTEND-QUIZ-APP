@@ -14,10 +14,14 @@ import {
   updateOptionStyles,
 } from '../../utils/utils';
 import ErrorDisplay from '../ErrorDisplay';
+import iconCorrect from '../../assets/images/icon-correct.svg';
+import iconIncorrect from '../../assets/images/icon-incorrect.svg';
+import { useState } from 'react';
 
 const { quizzes } = quizData;
 
 function Quiz({ currentQuiz }) {
+  const [isOptionSelected, setIsOptionSelected] = useState(true);
   const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
@@ -26,14 +30,16 @@ function Quiz({ currentQuiz }) {
 
   //   handle option select, update styles
   const handleOptionSelect = (event) => {
+    setIsOptionSelected(true);
     const dataValue = event.target.value;
     const siblingElement = event.target.nextSibling;
     dispatch(setCurrentAnswer(dataValue));
     clearOptionStyles();
-    updateOptionStyles(siblingElement, event.target);
+    updateOptionStyles(siblingElement, event.target, '#A729F5');
     console.dir(event.target);
   };
 
+  // submit question to check correct answer
   const handleQuestionSubmit = () => {
     if (currentAnswer) {
       dispatch(setIsChecking(true));
@@ -45,8 +51,11 @@ function Quiz({ currentQuiz }) {
         }
       });
       dispatch(setIsChecking(false));
+    } else {
+      setIsOptionSelected(false);
     }
   };
+  // onNext question event
   const handleNextQuestion = () => {
     dispatch(setIsChecking(true));
     dispatch(setCurrentAnswer(''));
@@ -72,7 +81,6 @@ function Quiz({ currentQuiz }) {
               {/* Options list */}
               <OptionList>
                 {quiz.questions[questionNumber].options.map((option, i) => (
-                  // Option
                   <li key={i + 'option'}>
                     <input
                       type='radio'
@@ -83,14 +91,17 @@ function Quiz({ currentQuiz }) {
                       value={option}
                       checked={currentAnswer === option}
                     />
+                    {/* Option Label Wrapper */}
                     <QuestionOption
                       htmlFor={optionsLabels[i]}
                       className='flex align-items-center'
                       $isDark={isDark}
                       id='optionLabelWrapper'
                     >
-                      <span className='optionLabel'>{optionsLabels[i]}</span>
-                      <p>{option}</p>
+                      <div className='flex align-items-center'>
+                        <span className='optionLabel'>{optionsLabels[i]}</span>
+                        <p>{option}</p>
+                      </div>
                     </QuestionOption>
                   </li>
                   //   Option end
@@ -111,7 +122,9 @@ function Quiz({ currentQuiz }) {
           Next question
         </button>
       )}
-      {/* <ErrorDisplay message={'hello'} /> */}
+      {!isOptionSelected && (
+        <ErrorDisplay message={'Please select an answer'} />
+      )}
     </Section>
   );
 }
@@ -163,13 +176,16 @@ const OptionList = styled.ul`
   }
 `;
 const QuestionOption = styled.label`
-  gap: 1.6rem;
+  justify-content: space-between;
   box-shadow: ${({ $isDark }) =>
     $isDark ? 'var(--light-box-shadow)' : 'var(--dark-box-shadow)'};
   background-color: var(--color-100);
   border-radius: var(--main-border-radius);
   padding: 1rem;
   cursor: pointer;
+  & .flex {
+    gap: 1.6rem;
+  }
   & .optionLabel {
     display: inline-block;
     padding: 1rem 2rem;

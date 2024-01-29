@@ -15,11 +15,10 @@ export const iconBgClasses = [
   'accessibilityIconBg',
 ];
 export const optionsLabels = ['A', 'B', 'C', 'D'];
-
-export function updateOptionStyles(sibling, target) {
+export function updateOptionStyles(sibling, target, outlineColor) {
   if (target.checked) {
-    sibling.style.outline = '3px solid #A729F5';
-    sibling.querySelector('span').style.backgroundColor = '#A729F5';
+    sibling.style.outline = `3px solid ${outlineColor}`;
+    sibling.querySelector('span').style.backgroundColor = `${outlineColor}`;
     sibling.querySelector('span').style.color = '#fff';
   }
 }
