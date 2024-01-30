@@ -9,9 +9,8 @@ import quizData from '../../data.json';
 import { styled } from 'styled-components';
 import { getQuestionsLength, checkAnswers } from '../../utils/utils';
 import {
-  updateOptionStyles,
   clearOptionStyles,
-  updateCorrectAnswerStyles,
+  highlightElement,
 } from '../../utils/dealingWithOptions';
 import ErrorDisplay from '../ErrorDisplay';
 import { useState } from 'react';
@@ -41,7 +40,7 @@ function Quiz({ currentQuiz }) {
     setIsOptionSelected(true); // option selected true
     dispatch(setCurrentAnswer(dataValue)); // set current answer state
     clearOptionStyles(); // clear prev hilighted options
-    updateOptionStyles(event, '#A729F5'); // highlight option selected
+    highlightElement(event.target, '#A729F5', 'active'); // highlight option selected
   };
 
   const handleQuestionSubmit = () => {
@@ -50,7 +49,10 @@ function Quiz({ currentQuiz }) {
       dispatch(setWillCheckAnswer(true)); // set is checking answer to true
       if (correctAnswer) {
         dispatch(setCorrectAnswers(correctAnswer)); // push to correct answers array
-        updateCorrectAnswerStyles(correctAnswerRef);
+        highlightElement(correctAnswerRef, '#26d782', 'correct');
+      } else {
+        highlightElement(missedCorrectRef, '#26d782', 'correct');
+        highlightElement(incorrectAnswerRef, '#ee5454', 'incorrect');
       }
       dispatch(setWillCheckAnswer(false)); // set is checking answer to false
     } else {

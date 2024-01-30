@@ -49,6 +49,7 @@ const OptionList = styled.ul`
 `;
 const Label = styled.label`
   justify-content: space-between;
+  width: 100%;
   box-shadow: ${({ $isDark }) =>
     $isDark ? 'var(--light-box-shadow)' : 'var(--dark-box-shadow)'};
   background-color: var(--color-100);
