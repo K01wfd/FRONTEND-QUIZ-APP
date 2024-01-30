@@ -1,7 +1,7 @@
 import iconCorrect from '../assets/images/icon-correct.svg';
 import iconIncorrect from '../assets/images/icon-incorrect.svg';
 
-export function highlightActive(targetElement, outlineColor) {
+function highlightActive(targetElement, outlineColor) {
   const siblingElement = targetElement.nextSibling;
   if (targetElement.checked) {
     siblingElement.style.outline = `3px solid ${outlineColor}`;
@@ -12,21 +12,30 @@ export function highlightActive(targetElement, outlineColor) {
 }
 function highlightAnswer(element, color, type) {
   const labelWrapper = element.nextSibling;
-  labelWrapper.style.outline = `3px solid ${color}`;
-  const labelInnerContent = labelWrapper.querySelector(
-    '[data-label-inner-content]'
-  );
-  labelInnerContent.firstChild.style.color = '#fff';
-  labelInnerContent.firstChild.style.backgroundColor = color;
+  if (type !== 'missedCorrect') {
+    labelWrapper.style.outline = `3px solid ${color}`;
+    const labelInnerContent = labelWrapper.querySelector(
+      '[data-label-inner-content]'
+    );
+    labelInnerContent.firstChild.style.color = '#fff';
+    labelInnerContent.firstChild.style.backgroundColor = color;
+  }
   let icon = document.createElement('img');
-  if (type === 'correct') {
+  if (type === 'correct' || type === 'missedCorrect') {
     icon.src = iconCorrect;
   } else {
     icon.src = iconIncorrect;
   }
   labelWrapper.appendChild(icon);
 }
-
+export function activateOrDisableOptions(action) {
+  const optionsButtons = document.querySelectorAll("[type='radio']");
+  optionsButtons.forEach((button) => {
+    console.dir(button);
+    if (action === 'activate') button.disabled = false;
+    if (action === 'disable') button.disabled = true;
+  });
+}
 export function highlightElement(element, outlineColor, type) {
   if (type === 'active') {
     highlightActive(element, outlineColor);
@@ -41,7 +50,6 @@ export function clearOptionStyles() {
     label.querySelector('span').style.color = '#626C7F';
     label.querySelector('span').style.backgroundColor = '#F4F6FA';
     let icon = label.lastChild;
-    console.log(icon.nodeName);
     if (icon.nodeName === 'IMG') icon.remove();
   });
 }

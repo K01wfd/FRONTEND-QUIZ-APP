@@ -10,24 +10,22 @@ import { styled } from 'styled-components';
 import { getQuestionsLength, checkAnswers } from '../../utils/utils';
 import {
   clearOptionStyles,
+  activateOrDisableOptions,
   highlightElement,
 } from '../../utils/dealingWithOptions';
 import ErrorDisplay from '../ErrorDisplay';
 import { useState } from 'react';
 import QuizOptions from './QuizOptions';
-
 const { quizzes } = quizData;
 
 function Quiz({ currentQuiz }) {
-  const [isOptionSelected, setIsOptionSelected] = useState(true);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
-  const { questionLength, activeQuiz } = getQuestionsLength(
-    quizzes,
-    currentQuiz
-  );
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const willCheckAnswer = useSelector((state) => state.quiz.willCheckAnswer);
+  const quizStarted = useSelector((state) => state.quiz.mainQuizStarted);
   const dispatch = useDispatch();
+  const [isOptionSelected, setIsOptionSelected] = useState(true);
+  const { questionLength } = getQuestionsLength(quizzes, currentQuiz);
   const {
     correctAnswerRef,
     incorrectAnswerRef,
@@ -51,16 +49,18 @@ function Quiz({ currentQuiz }) {
         dispatch(setCorrectAnswers(correctAnswer)); // push to correct answers array
         highlightElement(correctAnswerRef, '#26d782', 'correct');
       } else {
-        highlightElement(missedCorrectRef, '#26d782', 'correct');
+        highlightElement(missedCorrectRef, '#26d782', 'missedCorrect');
         highlightElement(incorrectAnswerRef, '#ee5454', 'incorrect');
       }
       dispatch(setWillCheckAnswer(false)); // set is checking answer to false
+      activateOrDisableOptions('disable');
     } else {
       setIsOptionSelected(false);
     }
   };
   // onNext question event
   const handleNextQuestion = () => {
+    activateOrDisableOptions('activate');
     dispatch(setWillCheckAnswer(true));
     dispatch(setCurrentAnswer(''));
     clearOptionStyles();
@@ -68,6 +68,7 @@ function Quiz({ currentQuiz }) {
       dispatch(setQuestionNumber());
     }
   };
+  const handleFinish = () => {};
 
   return (
     <Section>
@@ -105,6 +106,11 @@ function Quiz({ currentQuiz }) {
       {!willCheckAnswer && (
         <button className='btn' onClick={handleNextQuestion}>
           Next question
+        </button>
+      )}
+      {questionNumber === 9 && (
+        <button className='btn' onClick={handleFinish}>
+          Finish
         </button>
       )}
       {!isOptionSelected && (
