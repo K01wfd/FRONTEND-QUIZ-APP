@@ -1,9 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  setQuestionNumber,
+  increaseQuestionNum,
   setCorrectAnswers,
   setCurrentAnswer,
-  setWillCheckAnswer,
+  setSubmitPhase,
+  setMainQuizStarted,
+  setQuestionNumTo,
+  setCurrentQuiz,
+  emptyCorrectAnswers,
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
@@ -21,7 +25,7 @@ const { quizzes } = quizData;
 function Quiz({ currentQuiz }) {
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
-  const willCheckAnswer = useSelector((state) => state.quiz.willCheckAnswer);
+  const submitPhase = useSelector((state) => state.quiz.submitPhase);
   const quizStarted = useSelector((state) => state.quiz.mainQuizStarted);
   const dispatch = useDispatch();
   const [isOptionSelected, setIsOptionSelected] = useState(true);
@@ -44,7 +48,7 @@ function Quiz({ currentQuiz }) {
   const handleQuestionSubmit = () => {
     // if answer selected
     if (currentAnswer) {
-      dispatch(setWillCheckAnswer(true)); // set is checking answer to true
+      dispatch(setSubmitPhase(true)); // set currently in submit state to true
       if (correctAnswer) {
         dispatch(setCorrectAnswers(correctAnswer)); // push to correct answers array
         highlightElement(correctAnswerRef, '#26d782', 'correct');
@@ -52,8 +56,9 @@ function Quiz({ currentQuiz }) {
         highlightElement(missedCorrectRef, '#26d782', 'missedCorrect');
         highlightElement(incorrectAnswerRef, '#ee5454', 'incorrect');
       }
-      dispatch(setWillCheckAnswer(false)); // set is checking answer to false
+      dispatch(setSubmitPhase(false)); // set currently in submit state to false
       activateOrDisableOptions('disable');
+      dispatch(setCurrentAnswer(''));
     } else {
       setIsOptionSelected(false);
     }
@@ -61,15 +66,20 @@ function Quiz({ currentQuiz }) {
   // onNext question event
   const handleNextQuestion = () => {
     activateOrDisableOptions('activate');
-    dispatch(setWillCheckAnswer(true));
-    dispatch(setCurrentAnswer(''));
+    dispatch(setSubmitPhase(true));
     clearOptionStyles();
     if (questionNumber < questionLength - 1) {
-      dispatch(setQuestionNumber());
+      dispatch(increaseQuestionNum());
     }
   };
-  const handleFinish = () => {};
-
+  const handleFinish = () => {
+    dispatch(setMainQuizStarted(false));
+    dispatch(setCurrentQuiz(''));
+    dispatch(setQuestionNumTo(0));
+    dispatch(setSubmitPhase(true));
+    dispatch(emptyCorrectAnswers([]));
+  };
+  console.log(quizStarted);
   return (
     <Section>
       <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
@@ -98,17 +108,17 @@ function Quiz({ currentQuiz }) {
             // quiz body end
           )
       )}
-      {willCheckAnswer && (
+      {submitPhase && (
         <button className='btn' onClick={handleQuestionSubmit}>
           Submit answer
         </button>
       )}
-      {!willCheckAnswer && (
+      {!submitPhase && questionNumber < 9 && (
         <button className='btn' onClick={handleNextQuestion}>
           Next question
         </button>
       )}
-      {questionNumber === 9 && (
+      {questionNumber === 9 && !submitPhase && (
         <button className='btn' onClick={handleFinish}>
           Finish
         </button>

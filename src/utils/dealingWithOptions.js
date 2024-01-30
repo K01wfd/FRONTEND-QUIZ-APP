@@ -31,7 +31,6 @@ function highlightAnswer(element, color, type) {
 export function activateOrDisableOptions(action) {
   const optionsButtons = document.querySelectorAll("[type='radio']");
   optionsButtons.forEach((button) => {
-    console.dir(button);
     if (action === 'activate') button.disabled = false;
     if (action === 'disable') button.disabled = true;
   });
