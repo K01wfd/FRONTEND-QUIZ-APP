@@ -25,7 +25,7 @@ function QuizOptions({ quiz, questionNumber, currentAnswer, onOptionChange }) {
           >
             <div className='flex align-items-center' data-label-inner-content>
               <span className='optionLabel'>{optionsLabels[i]}</span>
-              <p>{option}</p>
+              <h3>{option}</h3>
             </div>
           </Label>
         </li>
@@ -44,7 +44,7 @@ const OptionList = styled.ul`
     color: #fff;
   }
   & > * + * {
-    margin-top: 2rem;
+    margin-top: 2.4rem;
   }
 `;
 const Label = styled.label`
@@ -67,10 +67,7 @@ const Label = styled.label`
     border-radius: var(--main-border-radius);
     background-color: ${({ $isDark }) =>
       $isDark ? '#fff' : 'var(--color-200)'};
-  }
-  & p {
-    font-size: var(--fs-h3);
-    color: var(--color-600);
+    color: #626c7f;
   }
 `;
 export default QuizOptions;

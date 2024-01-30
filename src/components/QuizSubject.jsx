@@ -26,7 +26,7 @@ function QuizSubject({ icon, title, iconBgClass }) {
         className='flex align-items-center'
         $isDark={isDark}
       >
-        {/* Pick subject icon */}
+        {/* subject icon */}
         <SubjectIcon icon={icon} title={title} iconBgClass={iconBgClass} />
         <h3>{title}</h3>
       </SubjectLabel>

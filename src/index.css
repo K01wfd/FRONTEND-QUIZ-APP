@@ -93,7 +93,11 @@ svg {
   max-width: 100%;
   object-fit: cover;
 }
-
+.font-size-display {
+  font-size: var(--fs-display);
+  font-weight: bold;
+  line-height: 1.2;
+}
 .flex {
   display: flex;
 }

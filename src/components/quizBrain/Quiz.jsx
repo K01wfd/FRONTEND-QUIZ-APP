@@ -125,7 +125,7 @@ function Quiz({ currentQuiz }) {
 }
 const Section = styled.section`
   margin-block: 3.2rem;
-  & p {
+  & .eyeBrow {
     color: var(--color-400);
     font-weight: 500;
   }
