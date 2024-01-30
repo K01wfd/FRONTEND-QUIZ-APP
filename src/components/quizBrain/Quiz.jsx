@@ -7,25 +7,20 @@ import {
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
-import {
-  getQuestionsLength,
-  optionsLabels,
-  checkAnswers,
-} from '../../utils/utils';
+import { getQuestionsLength, checkAnswers } from '../../utils/utils';
 import {
   updateOptionStyles,
   clearOptionStyles,
   updateCorrectAnswerStyles,
 } from '../../utils/dealingWithOptions';
 import ErrorDisplay from '../ErrorDisplay';
-
 import { useState } from 'react';
+import QuizOptions from './QuizOptions';
 
 const { quizzes } = quizData;
 
 function Quiz({ currentQuiz }) {
   const [isOptionSelected, setIsOptionSelected] = useState(true);
-  const isDark = useSelector((state) => state.colorMode.isDark);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
   const { questionLength, activeQuiz } = getQuestionsLength(
     quizzes,
@@ -89,37 +84,12 @@ function Quiz({ currentQuiz }) {
                 <div></div>
               </ProgreesBar>
               {/* Options list */}
-              <OptionList>
-                {quiz.questions[questionNumber].options.map((option, i) => (
-                  <li key={i + 'option'}>
-                    <input
-                      type='radio'
-                      className='visually-hidden'
-                      name='quizOption'
-                      id={optionsLabels[i]}
-                      onChange={(event) => handleOptionSelect(event)}
-                      value={option}
-                      checked={currentAnswer === option}
-                    />
-                    {/* Option Label Wrapper */}
-                    <QuestionOption
-                      htmlFor={optionsLabels[i]}
-                      className='flex align-items-center'
-                      $isDark={isDark}
-                      id='optionLabelWrapper'
-                    >
-                      <div
-                        className='flex align-items-center'
-                        data-label-inner-content
-                      >
-                        <span className='optionLabel'>{optionsLabels[i]}</span>
-                        <p>{option}</p>
-                      </div>
-                    </QuestionOption>
-                  </li>
-                  //   Option end
-                ))}
-              </OptionList>
+              <QuizOptions
+                quiz={quiz}
+                currentAnswer={currentAnswer}
+                onOptionChange={handleOptionSelect}
+                questionNumber={questionNumber}
+              />
               {/* Option list end */}
             </QuizQuestion>
             // quiz body end
@@ -175,43 +145,5 @@ const ProgreesBar = styled.div`
     transition: width 0.2s ease;
   }
 `;
-const OptionList = styled.ul`
-  list-style: none;
-  & input:focus ~ label {
-    outline: 3px solid var(--purple);
-  }
-  & input:focus ~ label .optionLabel {
-    background-color: var(--purple);
-    color: #fff;
-  }
-  & > * + * {
-    margin-top: 2rem;
-  }
-`;
-const QuestionOption = styled.label`
-  justify-content: space-between;
-  box-shadow: ${({ $isDark }) =>
-    $isDark ? 'var(--light-box-shadow)' : 'var(--dark-box-shadow)'};
-  background-color: var(--color-100);
-  border-radius: var(--main-border-radius);
-  padding: 1rem;
-  cursor: pointer;
-  & .flex {
-    gap: 1.6rem;
-  }
-  & .optionLabel {
-    display: inline-block;
-    padding: 1rem 2rem;
-    font-weight: 500;
-    font-size: var(--fs-h3);
-    border-radius: var(--main-border-radius);
-    background-color: ${({ $isDark }) =>
-      $isDark ? '#fff' : 'var(--color-200)'};
-    color: var(--color-400);
-  }
-  & p {
-    font-size: var(--fs-h3);
-    color: var(--color-600);
-  }
-`;
+
 export default Quiz;

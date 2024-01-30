@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import Switch from './components/Switch';
 import QuizPicker from './components/QuizPicker';
 import QuizTitle from './components/QuizTitle';
-import Quiz from './components/quizEngine/Quiz';
+import Quiz from './components/quizBrain/Quiz';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   const mainQuizStarted = useSelector((state) => state.quiz.mainQuizStarted);
