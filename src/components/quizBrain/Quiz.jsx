@@ -20,13 +20,16 @@ import {
 import ErrorDisplay from '../ErrorDisplay';
 import { useState } from 'react';
 import QuizOptions from './QuizOptions';
+import ButtonsGroup from './ButtonsGroup';
 const { quizzes } = quizData;
+const ACTIVE_COLOR = '#A729F5';
+const CORRECT_COLOR = '#26d782';
+const INCORRECT_COLOR = '#ee5454';
 
 function Quiz({ currentQuiz }) {
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const submitPhase = useSelector((state) => state.quiz.submitPhase);
-  const quizStarted = useSelector((state) => state.quiz.mainQuizStarted);
   const dispatch = useDispatch();
   const [isOptionSelected, setIsOptionSelected] = useState(true);
   const { questionLength } = getQuestionsLength(quizzes, currentQuiz);
@@ -37,12 +40,13 @@ function Quiz({ currentQuiz }) {
     missedCorrectRef,
   } = checkAnswers(currentQuiz, currentAnswer, questionNumber);
 
+  const MAX_QUESTION_LENGTH = questionLength - 1;
   const handleOptionSelect = (event) => {
     const dataValue = event.target.value;
     setIsOptionSelected(true); // option selected true
     dispatch(setCurrentAnswer(dataValue)); // set current answer state
     clearOptionStyles(); // clear prev hilighted options
-    highlightElement(event.target, '#A729F5', 'active'); // highlight option selected
+    highlightElement(event.target, ACTIVE_COLOR, 'active'); // highlight option selected
   };
 
   const handleQuestionSubmit = () => {
@@ -51,10 +55,10 @@ function Quiz({ currentQuiz }) {
       dispatch(setSubmitPhase(true)); // set currently in submit state to true
       if (correctAnswer) {
         dispatch(setCorrectAnswers(correctAnswer)); // push to correct answers array
-        highlightElement(correctAnswerRef, '#26d782', 'correct');
+        highlightElement(correctAnswerRef, CORRECT_COLOR, 'correct');
       } else {
-        highlightElement(missedCorrectRef, '#26d782', 'missedCorrect');
-        highlightElement(incorrectAnswerRef, '#ee5454', 'incorrect');
+        highlightElement(missedCorrectRef, CORRECT_COLOR, 'missedCorrect');
+        highlightElement(incorrectAnswerRef, INCORRECT_COLOR, 'incorrect');
       }
       dispatch(setSubmitPhase(false)); // set currently in submit state to false
       activateOrDisableOptions('disable');
@@ -79,7 +83,6 @@ function Quiz({ currentQuiz }) {
     dispatch(setSubmitPhase(true));
     dispatch(emptyCorrectAnswers([]));
   };
-  console.log(quizStarted);
   return (
     <Section>
       <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
@@ -108,21 +111,14 @@ function Quiz({ currentQuiz }) {
             // quiz body end
           )
       )}
-      {submitPhase && (
-        <button className='btn' onClick={handleQuestionSubmit}>
-          Submit answer
-        </button>
-      )}
-      {!submitPhase && questionNumber < 9 && (
-        <button className='btn' onClick={handleNextQuestion}>
-          Next question
-        </button>
-      )}
-      {questionNumber === 9 && !submitPhase && (
-        <button className='btn' onClick={handleFinish}>
-          Finish
-        </button>
-      )}
+      <ButtonsGroup
+        handleQuestionSubmit={handleQuestionSubmit}
+        handleNextQuestion={handleNextQuestion}
+        handleFinish={handleFinish}
+        maxQuestionLength={MAX_QUESTION_LENGTH}
+        questionNumber={questionNumber}
+        submitPhase={submitPhase}
+      />
       {!isOptionSelected && (
         <ErrorDisplay message={'Please select an answer'} />
       )}

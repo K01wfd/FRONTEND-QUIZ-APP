@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import errorIcon from '../assets/images/icon-error.svg';
 function ErrorDisplay({ message }) {
   return (
-    <ErrorWrapper className='flex align-items-center'>
+    <ErrorWrapper role='alert' className='flex align-items-center'>
       <img src={errorIcon} alt='error icon' />
       <p>{message}</p>
     </ErrorWrapper>
