@@ -6,18 +6,18 @@ import QuizTitle from './components/QuizTitle';
 import Quiz from './components/quizBrain/Quiz';
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
-  const mainQuizStarted = useSelector((state) => state.quiz.mainQuizStarted);
+  const quizStarted = useSelector((state) => state.quiz.quizStarted);
   const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
   console.log(correctAnswers);
   return (
     <MainWrapper>
       <Header id='header'>
-        {mainQuizStarted && <QuizTitle currentQuiz={currentQuiz} />}
+        {quizStarted && <QuizTitle currentQuiz={currentQuiz} />}
         <Switch />
       </Header>
       <main>
-        {!mainQuizStarted && <QuizPicker />}
-        {mainQuizStarted && <Quiz currentQuiz={currentQuiz} />}
+        {!quizStarted && <QuizPicker />}
+        {quizStarted && <Quiz currentQuiz={currentQuiz} />}
       </main>
     </MainWrapper>
   );

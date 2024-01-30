@@ -4,10 +4,9 @@ import {
   setCorrectAnswers,
   setCurrentAnswer,
   setSubmitPhase,
-  setMainQuizStarted,
+  setQuizStarted,
   setQuestionNumTo,
-  setCurrentQuiz,
-  emptyCorrectAnswers,
+  setQuizFinished,
 } from '../../features/quizSlic';
 import quizData from '../../data.json';
 import { styled } from 'styled-components';
@@ -77,11 +76,10 @@ function Quiz({ currentQuiz }) {
     }
   };
   const handleFinish = () => {
-    dispatch(setMainQuizStarted(false));
-    dispatch(setCurrentQuiz(''));
+    dispatch(setQuizStarted(false));
     dispatch(setQuestionNumTo(0));
     dispatch(setSubmitPhase(true));
-    dispatch(emptyCorrectAnswers([]));
+    dispatch(setQuizFinished(true));
   };
   return (
     <Section>
@@ -137,9 +135,6 @@ const QuizQuestion = styled.div`
   & h2 {
     margin-top: 2rem;
     margin-bottom: 3rem;
-  }
-  & h2:focus {
-    outline: 2px solid var(--purple);
   }
 `;
 const ProgreesBar = styled.div`

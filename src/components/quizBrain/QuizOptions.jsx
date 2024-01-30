@@ -67,7 +67,6 @@ const Label = styled.label`
     border-radius: var(--main-border-radius);
     background-color: ${({ $isDark }) =>
       $isDark ? '#fff' : 'var(--color-200)'};
-    color: var(--color-400);
   }
   & p {
     font-size: var(--fs-h3);

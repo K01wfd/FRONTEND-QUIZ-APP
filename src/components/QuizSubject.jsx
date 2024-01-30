@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentQuiz, setMainQuizStarted } from '../features/quizSlic';
+import { setCurrentQuiz, setQuizStarted } from '../features/quizSlic';
 import SubjectIcon from './SubjectIcon';
 
 function QuizSubject({ icon, title, iconBgClass }) {
@@ -8,7 +8,7 @@ function QuizSubject({ icon, title, iconBgClass }) {
   const dispatch = useDispatch();
   const handleSubjectChange = (event) => {
     dispatch(setCurrentQuiz(event.target.value));
-    dispatch(setMainQuizStarted(true));
+    dispatch(setQuizStarted(true));
   };
   return (
     <SubjectWrapper>
