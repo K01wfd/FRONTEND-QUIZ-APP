@@ -20,6 +20,7 @@ import ErrorDisplay from '../ErrorDisplay';
 import { useState } from 'react';
 import QuizOptions from './QuizOptions';
 import ButtonsGroup from './ButtonsGroup';
+import ProgressBar from './ProgressBar';
 const { quizzes } = quizData;
 const ACTIVE_COLOR = '#A729F5';
 const CORRECT_COLOR = '#26d782';
@@ -38,8 +39,8 @@ function Quiz({ currentQuiz }) {
     correctAnswer,
     missedCorrectRef,
   } = checkAnswers(currentQuiz, currentAnswer, questionNumber);
-
   const MAX_QUESTION_LENGTH = questionLength - 1;
+
   const handleOptionSelect = (event) => {
     const dataValue = event.target.value;
     setIsOptionSelected(true); // option selected true
@@ -47,7 +48,6 @@ function Quiz({ currentQuiz }) {
     clearOptionStyles(); // clear prev hilighted options
     highlightElement(event.target, ACTIVE_COLOR, 'active'); // highlight option selected
   };
-
   const handleQuestionSubmit = () => {
     // if answer selected
     if (currentAnswer) {
@@ -83,20 +83,21 @@ function Quiz({ currentQuiz }) {
   };
   return (
     <Section>
-      <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
-
+      {quizzes.map(
+        (quiz) =>
+          quiz.title === currentQuiz && (
+            <div className='quizHeader' key={quiz.title + 'header'}>
+              <p className='eyeBrow'>Question {questionNumber + 1} of 10</p>
+              <h2>{quiz.questions[questionNumber].question}</h2>
+              <ProgressBar questionNumber={questionNumber} />
+            </div>
+          )
+      )}
       {quizzes.map(
         (quiz) =>
           quiz.title === currentQuiz && (
             // quizBody
-            <QuizQuestion key={quiz.title}>
-              <h2>{quiz.questions[questionNumber].question}</h2>
-              <ProgreesBar
-                role='progressbar'
-                $width={(questionNumber + 1) * 10}
-              >
-                <div></div>
-              </ProgreesBar>
+            <QuizBody key={quiz.title}>
               {/* Options list */}
               <QuizOptions
                 quiz={quiz}
@@ -105,7 +106,7 @@ function Quiz({ currentQuiz }) {
                 questionNumber={questionNumber}
               />
               {/* Option list end */}
-            </QuizQuestion>
+            </QuizBody>
             // quiz body end
           )
       )}
@@ -124,34 +125,35 @@ function Quiz({ currentQuiz }) {
   );
 }
 const Section = styled.section`
-  margin-block: 3.2rem;
+  margin-top: 3.2rem;
   & .eyeBrow {
     color: var(--color-400);
     font-weight: 500;
+    margin-bottom: 2.7rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    padding-bottom: 3rem;
+    margin-top: 9rem;
+    display: grid;
+    column-gap: 13rem;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: flex-start;
+    & .eyeBrow {
+      margin-bottom: 2.7rem;
+    }
+    & .quizHeader {
+      grid-column: 1/2;
+    }
+    & button {
+      grid-column: 2/-1;
+    }
   }
 `;
-const QuizQuestion = styled.div`
+const QuizBody = styled.div`
   margin-bottom: 3rem;
   & h2 {
     margin-top: 2rem;
-    margin-bottom: 3rem;
-  }
-`;
-const ProgreesBar = styled.div`
-  width: 100%;
-  height: 16px;
-  margin-bottom: 6rem;
-  background-color: var(--color-100);
-  border-radius: 999px;
-  display: grid;
-  align-items: center;
-  padding-inline: 0.6rem;
-  & div {
-    height: 8px;
-    background-color: var(--purple);
-    width: ${({ $width }) => $width + '%'};
-    border-radius: 100px;
-    transition: width 0.2s ease;
+    margin-bottom: 2rem;
   }
 `;
 

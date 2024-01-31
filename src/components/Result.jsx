@@ -21,25 +21,34 @@ function Result() {
       <h1>
         Quiz completed <strong>you scored...</strong>
       </h1>
-      <ResultContent className='flex flex-col align-items-center'>
-        <QuizTitle currentQuiz={currentQuiz} />
-        <h1 className='font-size-display'>{correctAnswers.length}</h1>
-        <p>out of {questionLength}</p>
-      </ResultContent>
-      <button className='btn' onClick={handlePlayAgain}>
-        Play Again
-      </button>
+      <div>
+        <ResultContent className='flex flex-col align-items-center'>
+          <QuizTitle currentQuiz={currentQuiz} />
+          <h1 className='font-size-display'>{correctAnswers.length}</h1>
+          <p>out of {questionLength}</p>
+        </ResultContent>
+        <button className='btn' onClick={handlePlayAgain}>
+          Play Again
+        </button>
+      </div>
     </ResultSection>
   );
 }
 const ResultSection = styled.section`
 margin-top:6rem;
 & h1{
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.2;:;
 }
 & strong {
     font-weight: 600;
+  }
+  @media only screen and (min-width: 1440px) {
+    margin-top:9rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 9rem;
+    align-items: flex-start;
   }
 `;
 const ResultContent = styled.div`
@@ -54,6 +63,12 @@ const ResultContent = styled.div`
     font-weight: 500;
     font-size: var(--fs-body-m);
     margin-top: 1.2rem;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 3.2rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    margin-top: 0;
   }
 `;
 export default Result;

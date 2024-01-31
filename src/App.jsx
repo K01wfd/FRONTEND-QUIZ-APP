@@ -1,27 +1,30 @@
+import React, { Suspense } from 'react';
 import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import Switch from './components/Switch';
 import QuizPicker from './components/QuizPicker';
 import QuizTitle from './components/QuizTitle';
-import Quiz from './components/quizBrain/Quiz';
-import Result from './components/Result';
+
+const Quiz = React.lazy(() => import('./components/quizBrain/Quiz'));
+const Result = React.lazy(() => import('./components/Result'));
 function App() {
   const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   const quizStarted = useSelector((state) => state.quiz.quizStarted);
-  const correctAnswers = useSelector((state) => state.quiz.correctAnswers);
   const quizFinished = useSelector((state) => state.quiz.quizFinished);
-  console.log(correctAnswers);
   return (
     <MainWrapper>
       <Header id='header'>
-        {quizStarted && <QuizTitle currentQuiz={currentQuiz} />}
-        {quizFinished && <QuizTitle currentQuiz={currentQuiz} />}
+        {(quizStarted || quizFinished) && (
+          <QuizTitle currentQuiz={currentQuiz} />
+        )}
         <Switch />
       </Header>
       <main>
         {!quizStarted && !quizFinished && <QuizPicker />}
-        {quizStarted && <Quiz currentQuiz={currentQuiz} />}
-        {quizFinished && <Result />}
+        <Suspense fallback={<QuizPicker />}>
+          {quizStarted && <Quiz currentQuiz={currentQuiz} />}
+          {quizFinished && <Result />}
+        </Suspense>
       </main>
     </MainWrapper>
   );
@@ -41,6 +44,12 @@ const MainWrapper = styled.div`
 const Header = styled.header`
   display: flex;
   align-items: center;
-  padding-block: 1.6rem;
+  padding-block: 2.7rem;
+  @media only screen and (min-width: 768px) {
+    padding-top: 5.5rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    padding-top: 6rem;
+  }
 `;
 export default App;
