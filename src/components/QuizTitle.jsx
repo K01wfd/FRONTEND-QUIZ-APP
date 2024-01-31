@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import SubjectIcon from './SubjectIcon';
 import { subjects } from '../utils/utils';
 import { iconBgClasses } from '../utils/utils';
 import { styled } from 'styled-components';
-function QuizTitle({ currentQuiz }) {
+function QuizTitle() {
+  const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   return (
     <Title aria-label='quiz title' className='flex align-items-center'>
       {/* Pick the right icon */}

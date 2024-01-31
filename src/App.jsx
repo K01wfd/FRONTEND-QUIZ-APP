@@ -1,30 +1,26 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { styled } from 'styled-components';
 import Switch from './components/Switch';
 import QuizPicker from './components/QuizPicker';
 import QuizTitle from './components/QuizTitle';
+import Quiz from './components/quizBrain/Quiz';
+import Result from './components/Result';
 
-const Quiz = React.lazy(() => import('./components/quizBrain/Quiz'));
-const Result = React.lazy(() => import('./components/Result'));
 function App() {
-  const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   const quizStarted = useSelector((state) => state.quiz.quizStarted);
   const quizFinished = useSelector((state) => state.quiz.quizFinished);
   return (
     <MainWrapper>
       <Header id='header'>
-        {(quizStarted || quizFinished) && (
-          <QuizTitle currentQuiz={currentQuiz} />
-        )}
+        {(quizStarted || quizFinished) && <QuizTitle />}
         <Switch />
       </Header>
       <main>
         {!quizStarted && !quizFinished && <QuizPicker />}
-        <Suspense fallback={<QuizPicker />}>
-          {quizStarted && <Quiz currentQuiz={currentQuiz} />}
-          {quizFinished && <Result />}
-        </Suspense>
+
+        {quizStarted && <Quiz />}
+        {quizFinished && <Result />}
       </main>
     </MainWrapper>
   );

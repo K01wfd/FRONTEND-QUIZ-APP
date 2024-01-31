@@ -26,7 +26,8 @@ const ACTIVE_COLOR = '#A729F5';
 const CORRECT_COLOR = '#26d782';
 const INCORRECT_COLOR = '#ee5454';
 
-function Quiz({ currentQuiz }) {
+function Quiz() {
+  const currentQuiz = useSelector((state) => state.quiz.currentQuiz);
   const questionNumber = useSelector((state) => state.quiz.questionNumber);
   const currentAnswer = useSelector((state) => state.quiz.currentAnswer);
   const submitPhase = useSelector((state) => state.quiz.submitPhase);
