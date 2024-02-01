@@ -126,6 +126,7 @@ function Quiz() {
   );
 }
 const Section = styled.section`
+  padding-bottom: 2rem;
   margin-top: 3.2rem;
   & .eyeBrow {
     color: var(--color-400);
@@ -134,7 +135,7 @@ const Section = styled.section`
   }
   @media only screen and (min-width: 1440px) {
     padding-bottom: 3rem;
-    margin-top: 9rem;
+    margin-top: 8rem;
     display: grid;
     column-gap: 13rem;
     grid-template-columns: repeat(2, 1fr);

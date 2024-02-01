@@ -59,7 +59,7 @@ const ColorSwitch = styled.div`
   margin-left: auto;
   gap: 0.8rem;
   & img {
-    max-width: 1.6rem;
+    max-width: 2rem;
   }
 
   & .toggleContainer {

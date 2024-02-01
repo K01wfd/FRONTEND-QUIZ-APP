@@ -10,7 +10,7 @@ function ProgressBar({ questionNumber }) {
 const ProgreesBar = styled.div`
   width: 100%;
   height: 16px;
-  margin-bottom: 6.6rem;
+  margin-bottom: 5rem;
   margin-top: 4rem;
   background-color: var(--color-100);
   border-radius: 999px;
@@ -23,6 +23,9 @@ const ProgreesBar = styled.div`
     width: ${({ $width }) => $width + '%'};
     border-radius: 100px;
     transition: width 0.2s ease;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-bottom: 5.5rem;
   }
   @media only screen and (min-width: 1440px) {
     margin-top: 16rem;

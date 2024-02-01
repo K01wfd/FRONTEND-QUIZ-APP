@@ -35,16 +35,19 @@ function Result() {
   );
 }
 const ResultSection = styled.section`
-margin-top:6rem;
-& h1{
+  margin-top: 4rem;
+  & h1 {
     font-weight: 300;
-    line-height: 1.2;:;
-}
-& strong {
+    line-height: 1;
+  }
+  & strong {
     font-weight: 600;
   }
+  @media only screen and (min-width: 768px) {
+    margin-top: 4.5rem;
+  }
   @media only screen and (min-width: 1440px) {
-    margin-top:9rem;
+    margin-top: 9rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 9rem;
@@ -58,6 +61,9 @@ const ResultContent = styled.div`
   margin-top: 4rem;
   text-align: center;
   margin-bottom: 1.2rem;
+  & h1 {
+    margin-top: 1.5rem;
+  }
   & p {
     color: var(--color-400);
     font-weight: 500;

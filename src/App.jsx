@@ -42,10 +42,10 @@ const Header = styled.header`
   align-items: center;
   padding-block: 2.7rem;
   @media only screen and (min-width: 768px) {
-    padding-top: 5.5rem;
+    padding-top: 5rem;
   }
   @media only screen and (min-width: 1440px) {
-    padding-top: 6rem;
+    padding-top: 5.5rem;
   }
 `;
 export default App;

@@ -3,7 +3,6 @@ import { styled } from 'styled-components';
 import { optionsLabels } from '../../utils/utils';
 function QuizOptions({ quiz, questionNumber, currentAnswer, onOptionChange }) {
   const isDark = useSelector((state) => state.colorMode.isDark);
-  console.log(isDark);
   return (
     <OptionList>
       {quiz.questions[questionNumber].options.map((option, i) => (
@@ -45,7 +44,12 @@ const OptionList = styled.ul`
     color: #fff;
   }
   & > * + * {
-    margin-top: 2.4rem;
+    margin-top: 1.5rem;
+  }
+  @media only screen and (min-width: 1440px) {
+    & > * + * {
+      margin-top: 2.4rem;
+    }
   }
 `;
 const Label = styled.label`
