@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { optionsLabels } from '../../utils/utils';
 function QuizOptions({ quiz, questionNumber, currentAnswer, onOptionChange }) {
   const isDark = useSelector((state) => state.colorMode.isDark);
+  console.log(isDark);
   return (
     <OptionList>
       {quiz.questions[questionNumber].options.map((option, i) => (

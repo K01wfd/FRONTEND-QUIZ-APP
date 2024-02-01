@@ -8,10 +8,20 @@ import sunIconDark from '../assets/images/icon-sun-dark.svg';
 
 function Switch() {
   const isDark = useSelector((state) => state.colorMode.isDark);
+  if (isDark) {
+    document.body.classList.add('dark');
+  } else {
+    document.body.classList.remove('dark');
+  }
   const dispatch = useDispatch();
   const handleColorChange = (event) => {
     dispatch(setColorMode(event.target.checked));
     document.body.classList.toggle('dark');
+    if (event.target.checked) {
+      localStorage.setItem('color', 'dark');
+    } else {
+      localStorage.setItem('color', 'light');
+    }
   };
   return (
     <ColorSwitch className='flex align-items-center'>
@@ -32,6 +42,7 @@ function Switch() {
           id='toggle'
           onChange={(event) => handleColorChange(event)}
           aria-label='color mode switch'
+          checked={isDark}
         />
         <span className='checkmark'></span>
       </label>
