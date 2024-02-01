@@ -133,8 +133,10 @@ const Section = styled.section`
     font-weight: 500;
     margin-bottom: 2.7rem;
   }
-  @media only screen and (min-width: 1440px) {
+  @media only screen and (min-width: 768px) {
     padding-bottom: 3rem;
+  }
+  @media only screen and (min-width: 1440px) {
     margin-top: 8rem;
     display: grid;
     column-gap: 13rem;

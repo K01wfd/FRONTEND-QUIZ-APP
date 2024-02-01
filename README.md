@@ -36,7 +36,19 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![welcome-d-light](./screenshots/welcome-d-light.png)
+![welcome-d-dark](./screenshots/welcome-d-dark.png)
+![welcome-t](./screenshots/welcome-t.png)
+![welcome-m](./screenshots/welcome-m.png)
+![quiz-d-active](./screenshots/quiz-d-active.png)
+![quiz-d-active-dark](./screenshots/quiz-d-active-dark.png)
+![quiz-d-correct](./screenshots/quiz-d-correct.png)
+![quiz-d-incorrect](./screenshots/quiz-d-incorrect.png)
+![quiz-t-active](./screenshots/quiz-t-active.png)
+![quiz-m-active](./screenshots/quiz-m-active.png)
+![result-d](./screenshots/result-d.png)
+![result-t](./screenshots/result-t.png)
+![result-m](./screenshots/result-m.png)
 
 ### Links
 

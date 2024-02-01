@@ -35,6 +35,7 @@ function Result() {
   );
 }
 const ResultSection = styled.section`
+  padding-bottom: 2rem;
   margin-top: 4rem;
   & h1 {
     font-weight: 300;
@@ -62,7 +63,7 @@ const ResultContent = styled.div`
   text-align: center;
   margin-bottom: 1.2rem;
   & h1 {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
   }
   & p {
     color: var(--color-400);
